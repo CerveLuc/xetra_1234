@@ -1,14 +1,13 @@
 """Connector and methods for accessing S3"""
-
+import logging
 import os
 import boto3
-import logging
 
 class S3BucketConnector():
     """
     Class for interacting with S3 buckets
     """
-    def __init__(self, access_key: str, secret_key: str, endpoint_url: str, bucket: str)
+    def __init__(self, access_key: str, secret_key: str, endpoint_url: str, bucket: str):
         """
         Constructor for S3BucketConnector
 
@@ -23,20 +22,20 @@ class S3BucketConnector():
                                      aws_secret_access_key = os.environ[secret_key])
         # one underline means that it is a protected variables, 2 underlines would mean that it is a private variables
         self._s3 = self.session.resource(service_name = 'S3', endpoint_url = endpoint_url)
-        self._bucket = self._s3_.Bucket(bucket)
+        self._bucket = self._s3.Bucket(bucket)
 
     def list_files_in_prefix(self, prefix: str):
         """
         Listing all files with a prefix on the S3 Bucket
 
         :param prefix: prefix on the S3 Bucket that should be filtered with
-p
+
         returns:
             files: list of all the files name containing the prefix in the key
         """
         files = [obj.key for obj in self._bucket.objects.filter(Prefix=prefix)]
         return files
-    
+
     def read_csv_to_df(self):
         pass
 
